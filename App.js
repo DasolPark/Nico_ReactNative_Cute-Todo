@@ -7,7 +7,7 @@ import {
   StatusBar,
   Platform
 } from "react-native";
-import { Status } from "expo-background-fetch";
+import { TextInput } from "react-native-gesture-handler";
 
 const { height, width } = Dimensions.get("window");
 
@@ -16,7 +16,10 @@ class App extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <View style={styles.card} />
+        <Text style={styles.title}>Cute To Do</Text>
+        <View style={styles.card}>
+          <TextInput style={styles.input} placeholder={"New To Do"} />
+        </View>
       </View>
     );
   }
@@ -28,24 +31,32 @@ const styles = StyleSheet.create({
     backgroundColor: "#F23657",
     alignItems: "center"
   },
-  card: {
-    flex: 1,
-    width: width - 50,
-    backgroundColor: "white",
+  title: {
+    color: "white",
+    fontSize: 30,
     marginTop: 50,
+    fontWeight: "200",
+    marginBottom: 30
+  },
+  card: {
+    backgroundColor: "white",
+    flex: 1,
+    width: width - 25,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     ...Platform.select({
       ios: {
         shadowColor: "rgb(50,50,50)",
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
         shadowOffset: {
           height: -1,
           width: 0
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 5
+        }
       },
-      android: {}
+      android: {
+        elevation: 3
+      }
     })
   }
 });
