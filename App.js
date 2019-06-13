@@ -45,7 +45,7 @@ class App extends React.Component {
           />
           <ScrollView contentContainerStyle={styles.toDos}>
             {Object.values(toDos).map(toDo => (
-              <ToDo key={toDo.id} {...toDo} delete={this._deleteToDo} />
+              <ToDo key={toDo.id} {...toDo} deleteToDo={this._deleteToDo} />
             ))}
           </ScrollView>
         </View>
