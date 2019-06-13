@@ -7,17 +7,27 @@ import {
   Dimensions,
   TextInput
 } from "react-native";
+import propTypes from "prop-types";
 
 const { height, width } = Dimensions.get("window");
 export default class ToDo extends Component {
-  state = {
-    isEditing: false,
-    isCompleted: false,
-    toDoValue: ""
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEditing: false,
+      toDoValue: props.text
+    };
+  }
+  static propTypes = {
+    text: propTypes.string.isRequired,
+    isCompleted: propTypes.bool.isRequired,
+    deleteToDo: propTypes.func.isRequired,
+    id: propTypes.string.isRequired
   };
+
   render() {
     const { isCompleted, isEditing, toDoValue } = this.state;
-    const { text } = this.props;
+    const { text, id, deleteToDo } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.column}>
@@ -69,7 +79,7 @@ export default class ToDo extends Component {
                 <Text style={styles.actionText}>✏</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPressOut={this._deleteToDo}>
               <View style={styles.actionContainer}>
                 <Text style={styles.actionText}>❌</Text>
               </View>
@@ -87,10 +97,8 @@ export default class ToDo extends Component {
     });
   };
   _startEditing = () => {
-    const { text } = this.props;
     this.setState({
-      isEditing: true,
-      toDoValue: text
+      isEditing: true
     });
   };
   _finishEditing = () => {
@@ -142,8 +150,7 @@ const styles = StyleSheet.create({
   column: {
     flexDirection: "row",
     alignItems: "center",
-    width: width / 2,
-    justifyContent: "space-between"
+    width: width / 2
   },
   actions: {
     flexDirection: "row"
