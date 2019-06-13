@@ -8,16 +8,24 @@ import {
   Platform
 } from "react-native";
 import { TextInput, ScrollView } from "react-native-gesture-handler";
+import { AppLoading } from "expo";
 import ToDo from "./ToDo";
 
 const { height, width } = Dimensions.get("window");
 
 class App extends React.Component {
   state = {
-    newToDo: ""
+    newToDo: "",
+    loadedToDos: false
+  };
+  componentDidMount = () => {
+    this._loadToDos();
   };
   render() {
-    const { newToDo } = this.state;
+    const { newToDo, loadedToDos } = this.state;
+    if (!loadedToDos) {
+      return <AppLoading />;
+    }
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -43,6 +51,9 @@ class App extends React.Component {
     this.setState({
       newToDo: text
     });
+  };
+  _loadToDos = () => {
+    loadedToDos: true;
   };
 }
 
