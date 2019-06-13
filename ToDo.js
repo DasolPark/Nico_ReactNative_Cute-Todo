@@ -31,11 +31,11 @@ export default class ToDo extends Component {
           </TouchableOpacity>
           {isEditing ? (
             <TextInput
-              style={
-                (styles.input,
+              style={[
+                styles.input,
                 styles.text,
-                isCompleted ? styles.completedText : styles.unCompletedText)
-              }
+                isCompleted ? styles.completedText : styles.unCompletedText
+              ]}
               value={toDoValue}
               multiline={true}
               onChangeText={this._controlInput}
