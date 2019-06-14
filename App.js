@@ -3,11 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions,
   StatusBar,
-  Platform
+  TextInput,
+  Dimensions,
+  Platform,
+  ScrollView,
+  AsyncStorage
 } from "react-native";
-import { TextInput, ScrollView } from "react-native-gesture-handler";
 import { AppLoading } from "expo";
 import ToDo from "./ToDo";
 import uuidv1 from "uuid/v1";
@@ -90,6 +92,7 @@ class App extends React.Component {
             ...newToDoObject
           }
         };
+        this._saveToDos(newState.toDos);
         return { ...newState };
       });
     }
@@ -102,6 +105,7 @@ class App extends React.Component {
         ...prevState,
         ...toDos
       };
+      this._saveToDos(newState.toDos);
       return { ...newState };
     });
   };
@@ -117,6 +121,7 @@ class App extends React.Component {
           }
         }
       };
+      this._saveToDos(newState.toDos);
       return { ...newState };
     });
   };
@@ -132,6 +137,7 @@ class App extends React.Component {
           }
         }
       };
+      this._saveToDos(newState.toDos);
       return { ...newState };
     });
   };
@@ -147,8 +153,12 @@ class App extends React.Component {
           }
         }
       };
+      this._saveToDos(newState.toDos);
       return { ...newState };
     });
+  };
+  _saveToDos = newToDos => {
+    const saveToDos = AsyncStorage.setItem("toDos", JSON.stringify(newToDos));
   };
 }
 
